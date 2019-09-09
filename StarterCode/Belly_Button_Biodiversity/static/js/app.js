@@ -33,25 +33,49 @@ function buildCharts(sample) {
   var url = '/samples/' + sample
   d3.json(url).then(function(response) {
 
-    var values = response.sample_values.slice(0,10);
-    var ids = response.otu_ids.slice(0,10);
-    var labels = response.otu_labels.slice(0,10);
+    var values = response.sample_values
+    var ids = response.otu_ids
+    var labels = response.otu_labels
 
     // @TODO: Build a Bubble Chart using the sample data
+    var trace = {
+      x: ids,
+      y: values,
+      mode: "markers",
+      type: "scatter",
+      hovertext: labels,
+      hoverinfo: "text",
+      marker: {
+        size: values,
+        color: ids,
+      }
+    };
 
+    data = [trace];
+
+    var layout = {
+      xaxis: { title: "OTU ID"}
+    };
+
+    Plotly.plot("bubble", data, layout, {responsive: true});
 
     // @TODO: Build a Pie Chart
+
+    var topValues = response.sample_values.slice(0,10);
+    var topIds = response.otu_ids.slice(0,10);
+    var topLabels = response.otu_labels.slice(0,10);
+
     data = [{
-      "labels": ids,
-      "values": values,
-      "hovertext": labels,
+      "labels": topIds,
+      "values": topValues,
+      "hovertext": topLabels,
       "hoverinfo": "text",
       "type": "pie"
     }];
 
     var layout = {
       title: "Percentage of Top 10 Samples"}
-      Plotly.plot('pie', data, layout);
+      Plotly.plot('pie', data, layout, {responsive: true});
 
     // HINT: You will need to use slice() to grab the top 10 sample_values,
     // otu_ids, and labels (10 each).
