@@ -37,18 +37,21 @@ function buildCharts(sample) {
     var ids = response.otu_ids.slice(0,10);
     var labels = response.otu_labels.slice(0,10);
 
-    console.log(values);
-
-
-
-    // var layout = {
-    //   title: "Percentage of Top 10 Samples"}
-    //   Plotly.newPlot('pie', data, layout);
-  
     // @TODO: Build a Bubble Chart using the sample data
 
-    // @TODO: Build a Pie Chart
 
+    // @TODO: Build a Pie Chart
+    data = [{
+      "labels": ids,
+      "values": values,
+      "hovertext": labels,
+      "hoverinfo": "text",
+      "type": "pie"
+    }];
+
+    var layout = {
+      title: "Percentage of Top 10 Samples"}
+      Plotly.plot('pie', data, layout);
 
     // HINT: You will need to use slice() to grab the top 10 sample_values,
     // otu_ids, and labels (10 each).
